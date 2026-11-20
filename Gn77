@@ -1,0 +1,153 @@
+-- GN MODS | Dev: GN | Key: GN-7FGK-89DR-1LK9
+local P=game:GetService("Players")local U=game:GetService("UserInputService")local T=game:GetService("TweenService")local C=game:GetService("Workspace").CurrentCamera local LP=P.LocalPlayer local PG=LP:WaitForChild("PlayerGui")
+local function GP()local ok,g=pcall(function()return game:GetService("CoreGui")end)return(ok and g)or PG end
+local K="GN-7FGK-89DR-1LK9"
+local CLR={B=Color3.fromRGB(15,10,25),P=Color3.fromRGB(22,15,38),A=Color3.fromRGB(30,20,50),N=Color3.fromRGB(155,80,255),NC=Color3.fromRGB(190,120,255),T=Color3.fromRGB(240,235,255),TF=Color3.fromRGB(150,140,180),S=Color3.fromRGB(0,220,130),E=Color3.fromRGB(255,70,90)}
+local E={ESPBox=false,ESPLines=false,ESPName=false,ESPDist=false,ESPHl=false,Aim=false,FOV=true,FOVT=150,Alvo=nil,WS=16,Min=false}
+local function C1(c,p,pr)local o=Instance.new(c)for k,v in pairs(p or{})do o[k]=v end if pr then o.Parent=pr end return o end
+local function RD(o,r)local c=Instance.new("UICorner",o)c.CornerRadius=UDim.new(0,r or 8)return c end
+local function TW(o,t,p)T:Create(o,TweenInfo.new(t or .2,Enum.EasingStyle.Quad),p):Play()end
+local GParent=GP()
+pcall(function()for _,n in pairs({"GN_MODS_Key","GN_MODS_Menu"})do local x=GParent:FindFirstChild(n)if x then x:Destroy()end end end)
+-- TELA KEY
+local TK=C1("ScreenGui",{Name="GN_MODS_Key",ResetOnSpawn=false,IgnoreGuiInset=true,DisplayOrder=100},GParent)
+C1("Frame",{Size=UDim2.fromScale(1,1),BackgroundColor3=CLR.B,BorderSizePixel=0},TK)
+local PK=C1("Frame",{Size=UDim2.fromOffset(400,320),Position=UDim2.fromScale(.5,.5),AnchorPoint=Vector2.new(.5,.5),BackgroundColor3=CLR.P,BorderSizePixel=0},TK)
+RD(PK,14)C1("UIStroke",{Color=CLR.N,Thickness=2,Transparency=.2},PK)
+C1("TextLabel",{Size=UDim2.new(1,0,0,50),Position=UDim2.fromOffset(0,25),BackgroundTransparency=1,Text="GN MODS",Font=Enum.Font.GothamBlack,TextSize=34,TextColor3=CLR.N},PK)
+C1("TextLabel",{Size=UDim2.new(1,0,0,20),Position=UDim2.fromOffset(0,75),BackgroundTransparency=1,Text="SISTEMA DE AUTENTICAÇÃO",Font=Enum.Font.GothamMedium,TextSize=13,TextColor3=CLR.TF},PK)
+local CK=C1("TextBox",{Size=UDim2.new(1,-60,0,46),Position=UDim2.fromOffset(30,120),BackgroundColor3=CLR.A,BorderSizePixel=0,PlaceholderText="Digite sua Key...",PlaceholderColor3=CLR.TF,Text="",TextColor3=CLR.T,Font=Enum.Font.GothamMedium,TextSize=15,ClearTextOnFocus=false},PK)
+RD(CK,8)C1("UIStroke",{Color=CLR.N,Thickness=1.5,Transparency=.4},CK)
+local SK=C1("TextLabel",{Size=UDim2.new(1,-60,0,24),Position=UDim2.fromOffset(30,178),BackgroundTransparency=1,Text="",Font=Enum.Font.GothamBold,TextSize=14,TextColor3=CLR.E},PK)
+local BV=C1("TextButton",{Size=UDim2.new(1,-60,0,48),Position=UDim2.fromOffset(30,215),BackgroundColor3=CLR.N,BorderSizePixel=0,Text="VALIDAR",Font=Enum.Font.GothamBold,TextSize=16,TextColor3=Color3.new(1,1,1),AutoButtonColor=false},PK)
+RD(BV,8)
+C1("TextLabel",{Size=UDim2.new(1,0,0,20),Position=UDim2.new(0,0,1,-30),BackgroundTransparency=1,Text="Desenvolvido por GN © 2024",Font=Enum.Font.Gotham,TextSize=11,TextColor3=CLR.TF},PK)
+-- MENU
+local TM=C1("ScreenGui",{Name="GN_MODS_Menu",ResetOnSpawn=false,IgnoreGuiInset=true,DisplayOrder=99,Enabled=false},GParent)
+local MP=C1("Frame",{Size=UDim2.fromOffset(560,400),Position=UDim2.new(.5,-280,.5,-200),BackgroundColor3=CLR.P,BorderSizePixel=0,ClipsDescendants=true},TM)
+RD(MP,14)C1("UIStroke",{Color=CLR.N,Thickness=2,Transparency=.2},MP)
+local BT=C1("Frame",{Size=UDim2.new(1,0,0,42),BackgroundColor3=CLR.B,BorderSizePixel=0},MP)
+C1("TextLabel",{Size=UDim2.new(1,-130,1,0),Position=UDim2.fromOffset(16,0),BackgroundTransparency=1,Text="⚡ GN MODS",Font=Enum.Font.GothamBlack,TextSize=18,TextColor3=CLR.N,TextXAlignment=Enum.TextXAlignment.Left},BT)
+local BM=C1("TextButton",{Size=UDim2.fromOffset(28,28),Position=UDim2.new(1,-70,0,7),BackgroundColor3=CLR.A,BorderSizePixel=0,Text="−",Font=Enum.Font.GothamBold,TextSize=18,TextColor3=CLR.N,AutoButtonColor=false},BT)
+RD(BM,6)
+local BF=C1("TextButton",{Size=UDim2.fromOffset(28,28),Position=UDim2.new(1,-36,0,7),BackgroundColor3=CLR.A,BorderSizePixel=0,Text="✕",Font=Enum.Font.GothamBold,TextSize=14,TextColor3=CLR.E,AutoButtonColor=false},BT)
+RD(BF,6)
+local function Drag(h,a)local dr=false local i0,p0 h.InputBegan:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then dr=true;i0=i.Position;p0=a.Position end end)h.InputEnded:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then dr=false end end)U.InputChanged:Connect(function(i)if dr and(i.UserInputType==Enum.UserInputType.MouseMovement or i.UserInputType==Enum.UserInputType.Touch)then local d=i.Position-i0;a.Position=UDim2.new(p0.X.Scale,p0.X.Offset+d.X,p0.Y.Scale,p0.Y.Offset+d.Y)end end)end
+Drag(BT,MP)
+-- ABAS
+local BA={}local PA={}
+local CA=C1("Frame",{Size=UDim2.new(0,110,1,-50),Position=UDim2.fromOffset(0,48),BackgroundColor3=CLR.B,BorderSizePixel=0},MP)
+C1("UIListLayout",{Padding=UDim.new(0,6)},CA)
+C1("UIPadding",{PaddingTop=UDim.new(0,8),PaddingLeft=UDim.new(0,8),PaddingRight=UDim.new(0,8)},CA)
+local CP=C1("Frame",{Size=UDim2.new(1,-120,1,-58),Position=UDim2.fromOffset(115,48),BackgroundTransparency=1,ClipsDescendants=true},MP)
+local NA={"HOME","VISUAL","AIM","PLAYER","SETTINGS"}
+local IA={HOME="🏠",VISUAL="👁",AIM="🎯",PLAYER="🏃",SETTINGS="⚙"}
+for i,n in ipairs(NA)do
+local b=C1("TextButton",{Size=UDim2.new(1,0,0,42),BackgroundColor3=CLR.A,BorderSizePixel=0,Text=" "..IA[n].."  "..n,Font=Enum.Font.GothamBold,TextSize=12,TextColor3=CLR.TF,TextXAlignment=Enum.TextXAlignment.Left,AutoButtonColor=false,LayoutOrder=i},CA)
+RD(b,8)BA[n]=b
+local pg=C1("ScrollingFrame",{Size=UDim2.fromScale(1,1),BackgroundTransparency=1,BorderSizePixel=0,ScrollBarThickness=4,ScrollBarImageColor3=CLR.N,CanvasSize=UDim2.new(0,0,0,0),AutomaticCanvasSize=Enum.AutomaticSize.Y,Visible=(n=="HOME")},CP)
+C1("UIListLayout",{Padding=UDim.new(0,8)},pg)C1("UIPadding",{PaddingTop=UDim.new(0,4),PaddingBottom=UDim.new(0,10)},pg)
+PA[n]=pg
+b.MouseButton1Click:Connect(function()
+for x,y in pairs(BA)do if x==n then TW(y,.2,{BackgroundColor3=CLR.N,TextColor3=Color3.new(1,1,1)})else TW(y,.2,{BackgroundColor3=CLR.A,TextColor3=CLR.TF})end end
+for x,y in pairs(PA)do y.Visible=(x==n)end
+end)
+end
+TW(BA.HOME,.2,{BackgroundColor3=CLR.N,TextColor3=Color3.new(1,1,1)})
+-- COMPONENTES
+local function Sec(p,t,o)C1("TextLabel",{Size=UDim2.new(1,0,0,24),BackgroundTransparency=1,Text=t,Font=Enum.Font.GothamBold,TextSize=13,TextColor3=CLR.N,TextXAlignment=Enum.TextXAlignment.Left,LayoutOrder=o},p)end
+local function TG(p,t,o,cb)
+local f=C1("Frame",{Size=UDim2.new(1,0,0,38),BackgroundColor3=CLR.A,BorderSizePixel=0,LayoutOrder=o},p)RD(f,8)
+C1("TextLabel",{Size=UDim2.new(1,-70,1,0),Position=UDim2.fromOffset(12,0),BackgroundTransparency=1,Text=t,Font=Enum.Font.GothamMedium,TextSize=13,TextColor3=CLR.T,TextXAlignment=Enum.TextXAlignment.Left},f)
+local s=C1("Frame",{Size=UDim2.fromOffset(40,20),Position=UDim2.new(1,-52,.5,-10),BackgroundColor3=Color3.fromRGB(50,45,65),BorderSizePixel=0},f)RD(s,10)
+local b=C1("Frame",{Size=UDim2.fromOffset(14,14),Position=UDim2.fromOffset(3,3),BackgroundColor3=Color3.new(1,1,1),BorderSizePixel=0},s)RD(b,7)
+local a=false
+local btn=C1("TextButton",{Size=UDim2.fromScale(1,1),BackgroundTransparency=1,Text=""},f)
+btn.MouseButton1Click:Connect(function()
+a=not a TW(s,.2,{BackgroundColor3=a and CLR.N or Color3.fromRGB(50,45,65)})TW(b,.2,{Position=a and UDim2.fromOffset(23,3) or UDim2.fromOffset(3,3)})
+if cb then cb(a)end
+end)
+end
+local function SL(p,t,o,mn,mx,pd,cb)
+local f=C1("Frame",{Size=UDim2.new(1,0,0,52),BackgroundColor3=CLR.A,BorderSizePixel=0,LayoutOrder=o},p)RD(f,8)
+C1("TextLabel",{Size=UDim2.new(1,-90,0,20),Position=UDim2.fromOffset(12,6),BackgroundTransparency=1,Text=t,Font=Enum.Font.GothamMedium,TextSize=12,TextColor3=CLR.T,TextXAlignment=Enum.TextXAlignment.Left},f)
+local vl=C1("TextLabel",{Size=UDim2.fromOffset(60,20),Position=UDim2.new(1,-72,0,6),BackgroundTransparency=1,Text=tostring(pd),Font=Enum.Font.GothamBold,TextSize=12,TextColor3=CLR.N,TextXAlignment=Enum.TextXAlignment.Right},f)
+local tr=C1("Frame",{Size=UDim2.new(1,-24,0,6),Position=UDim2.fromOffset(12,36),BackgroundColor3=Color3.fromRGB(45,40,60),BorderSizePixel=0},f)RD(tr,3)
+local pf=C1("Frame",{Size=UDim2.fromScale((pd-mn)/(mx-mn),1),BackgroundColor3=CLR.N,BorderSizePixel=0},tr)RD(pf,3)
+local kn=C1("Frame",{Size=UDim2.fromOffset(14,14),AnchorPoint=Vector2.new(.5,.5),Position=UDim2.new((pd-mn)/(mx-mn),0,.5,0),BackgroundColor3=Color3.new(1,1,1),BorderSizePixel=0},tr)RD(kn,7)
+C1("UIStroke",{Color=CLR.N,Thickness=2},kn)
+local v=pd
+local function up(a)a=math.clamp(a,0,1)v=math.floor(mn+(mx-mn)*a+.5)pf.Size=UDim2.fromScale(a,1)kn.Position=UDim2.new(a,0,.5,0)vl.Text=tostring(v)if cb then cb(v)end end
+local it=C1("TextButton",{Size=UDim2.new(1,0,0,14),Position=UDim2.fromOffset(0,-4),BackgroundTransparency=1,Text=""},tr)
+local dr=false
+local function ca(x)return(x-tr.AbsolutePosition.X)/tr.AbsoluteSize.X end
+it.InputBegan:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then dr=true;up(ca(i.Position.X))end end)
+it.InputEnded:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then dr=false end end)
+U.InputChanged:Connect(function(i)if dr and(i.UserInputType==Enum.UserInputType.MouseMovement or i.UserInputType==Enum.UserInputType.Touch)then up(ca(i.Position.X))end end)
+end
+local function BT2(p,t,o,cr,cb)
+local b=C1("TextButton",{Size=UDim2.new(1,0,0,38),BackgroundColor3=cr or CLR.N,BorderSizePixel=0,Text=t,Font=Enum.Font.GothamBold,TextSize=13,TextColor3=Color3.new(1,1,1),AutoButtonColor=false,LayoutOrder=o},p)RD(b,8)
+b.MouseButton1Click:Connect(function()if cb then cb()end end)
+end
+-- HOME
+local hm=PA.HOME
+Sec(hm,"BEM-VINDO AO GN MODS",1)
+local bv=C1("TextLabel",{Size=UDim2.new(1,0,0,90),BackgroundColor3=CLR.A,BorderSizePixel=0,Text="\nOlá, "..LP.Name.."!\n\nVersão: 1.0.0  |  Dev: GN",Font=Enum.Font.GothamMedium,TextSize=13,TextColor3=CLR.T,TextWrapped=true,LayoutOrder=2},hm)RD(bv,8)
+Sec(hm,"INFORMAÇÕES",3)
+local inf=C1("TextLabel",{Size=UDim2.new(1,0,0,70),BackgroundColor3=CLR.A,BorderSizePixel=0,Text="\nKey: Autenticada ✓\nStatus: Ativo",Font=Enum.Font.GothamMedium,TextSize=13,TextColor3=CLR.T,LayoutOrder=4},hm)RD(inf,8)
+-- VISUAL
+local vs=PA.VISUAL
+Sec(vs,"ESP - DESTAQUES",1)
+TG(vs,"ESP Box",2,function(v)E.ESPBox=v end)
+TG(vs,"ESP Lines",3,function(v)E.ESPLines=v end)
+TG(vs,"ESP Name",4,function(v)E.ESPName=v end)
+TG(vs,"ESP Distance",5,function(v)E.ESPDist=v end)
+TG(vs,"ESP Highlight",6,function(v)E.ESPHl=v end)
+-- AIM
+local am=PA.AIM
+Sec(am,"AIMBOT (DEMO)",1)
+TG(am,"Aimbot Ativo",2,function(v)E.Aim=v end)
+TG(am,"FOV Circle",3,function(v)E.FOV=v end)
+SL(am,"Tamanho FOV",4,40,500,150,function(v)E.FOVT=v end)
+Sec(am,"ALVO",5)
+local al=C1("TextLabel",{Size=UDim2.new(1,0,0,30),BackgroundColor3=CLR.A,BorderSizePixel=0,Text="Alvo: Nenhum",Font=Enum.Font.GothamMedium,TextSize=12,TextColor3=CLR.T,LayoutOrder=6},am)RD(al,8)
+BT2(am,"Selecionar Alvo Próximo",7,CLR.N,function()
+local mp,md=nil,math.huge local hr=LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")if not hr then return end
+for _,p in ipairs(P:GetPlayers())do if p~=LP and p.Character and p.Character:FindFirstChild("HumanoidRootPart")then local d=(p.Character.HumanoidRootPart.Position-hr.Position).Magnitude if d<md then md=d;mp=p end end end
+E.Alvo=mp al.Text="Alvo: "..(mp and mp.Name or "Nenhum")
+end)
+-- PLAYER
+local pl=PA.PLAYER
+Sec(pl,"MOVIMENTAÇÃO",1)
+local wsl=C1("TextLabel",{Size=UDim2.new(1,0,0,30),BackgroundColor3=CLR.A,BorderSizePixel=0,Text="WalkSpeed: 16",Font=Enum.Font.GothamMedium,TextSize=12,TextColor3=CLR.T,LayoutOrder=2},pl)RD(wsl,8)
+SL(pl,"WalkSpeed",3,16,200,16,function(v)E.WS=v wsl.Text="WalkSpeed: "..v local h=LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")if h then h.WalkSpeed=v end end)
+BT2(pl,"Resetar Velocidade",4,CLR.E,function()wsl.Text="WalkSpeed: 16"local h=LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")if h then h.WalkSpeed=16 end end)
+BT2(pl,"Pular Mais Alto",5,CLR.N,function()local h=LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")if h then h.JumpPower=100 end end)
+-- SETTINGS
+local st=PA.SETTINGS
+Sec(st,"CONFIGURAÇÕES",1)
+BT2(st,"Fechar Menu",2,CLR.E,function()TM.Enabled=false end)
+BT2(st,"Deslogar",3,CLR.E,function()TM.Enabled=false TK.Enabled=true CK.Text=""end)
+Sec(st,"SOBRE",4)
+local sb=C1("TextLabel",{Size=UDim2.new(1,0,0,80),BackgroundColor3=CLR.A,BorderSizePixel=0,Text="\nGN MODS v1.0.0\nDev: GN\nKey: GN-7FGK-89DR-1LK9",Font=Enum.Font.GothamMedium,TextSize=12,TextColor3=CLR.T,LayoutOrder=5},st)RD(sb,8)
+-- BOTÕES TOPO
+BM.MouseButton1Click:Connect(function()E.Min=not E.Min if E.Min then TW(MP,.25,{Size=UDim2.fromOffset(560,42)})BM.Text="+"CP.Visible=false CA.Visible=false else TW(MP,.25,{Size=UDim2.fromOffset(560,400)})BM.Text="−"CP.Visible=true CA.Visible=true end end)
+BF.MouseButton1Click:Connect(function()TM.Enabled=false end)
+-- VALIDAR KEY
+BV.MouseButton1Click:Connect(function()
+if CK.Text==K then
+SK.Text="KEY VÁLIDA ✓"SK.TextColor3=CLR.S
+task.wait(.5)TK.Enabled=false TM.Enabled=true
+else
+SK.Text="KEY INVÁLIDA"SK.TextColor3=CLR.E
+end
+end)
+-- LOOP PRINCIPAL
+local FOVC=Drawing.new("Circle")FOVC.Thickness=1.5 FOVC.Color=CLR.N FOVC.Filled=false FOVC.NumSides=60 FOVC.Visible=false
+game:GetService("RunService").RenderStepped:Connect(function()
+if E.FOV and TM.Enabled and PA.AIM.Visible then
+FOVC.Position=Vector2.new(C.ViewportSize.X/2,C.ViewportSize.Y/2)
+FOVC.Radius=E.FOVT FOVC.Visible=true
+else FOVC.Visible=false end
+end)
+print("[GN MODS] Carregado com sucesso!")
